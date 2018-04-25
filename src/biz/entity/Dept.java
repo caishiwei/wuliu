@@ -8,18 +8,20 @@ import javax.persistence.Table;
 /**
  * 部门
  * 
- * @author jiu
- * 
+ * @author CaiSW
+ * 配送点entity  
  */
 @Entity
 @Table(name = "t_dept")
 public class Dept {
 	private Long id;
 	private String name;//部门名称
-	//配送点名称，配送点所在地址，配送点规模，备注
+	//配送点名称，配送点所在地址，配送点规模，备注  经度 维度
 	private String address;
 	private String scale;
 	private String note;
+	private String lng;
+	private String lat;
 
 	public String getAddress() {
 		return address;
@@ -62,5 +64,17 @@ public class Dept {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	public String getLng() {
+		return lng;
+	}
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+	public String getLat() {
+		return lat;
+	}
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+	
 }
