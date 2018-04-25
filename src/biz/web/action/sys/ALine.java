@@ -1,8 +1,10 @@
 package biz.web.action.sys;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -28,6 +30,7 @@ import biz.web.service.impl.BizService;
 import com.opensymphony.xwork2.ModelDriven;
 
 import common.action.struts.BaseAction;
+import oracle.net.aso.s;
 
 /**
  * 部门的增删改,根据方法名称顾名思义
@@ -82,19 +85,21 @@ public class ALine extends BaseAction implements ModelDriven<Line> {
 		try {
 			Line temp = (Line) service.get(Line.class, uid);
 			putRequestValue("modifybean", temp);
-			
-			List<LineStation> lslist = service.queryByHQL("from LineStation where line.id=? order by id", temp.getId());
+			List<LineStation> lslist = service.queryByHQL("from LineStation where line.id=? order by stationIndex", temp.getId());
 			putRequestValue("list11", lslist);
-			String ss  = "";
+			StringBuilder ss  = new StringBuilder();
 			for(LineStation ls: lslist){
-				ss+="\""+ls.getDept().getAddress()+"\",";
+				//ss+="\""+ls.getDept().getAddress()+"\",";
+			ss.append(ls.getDept().getLng()).append(",").append(ls.getDept().getLat());
+			ss.append("-");
 			}
-			if(StringUtils.isNotBlank(ss)){
-				ss = ss.substring(0,ss.length()-1);
+			String string=ss.toString();
+			// \地点1\地点2\
+			if(StringUtils.isNotBlank(string)){
+				string=string.substring(0,string.length()-1);
 			}
-			putRequestValue("waypoints", ss);
+			putRequestValue("waypoints", string);
 			 //"成都","北京"
-			
 			return "getOne";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,6 +154,7 @@ public class ALine extends BaseAction implements ModelDriven<Line> {
 			e.printStackTrace();
 			MessageUtil.addMessage(getRequest(), "添加失败");
 			return ERROR;
+			
 		}
 	}
 

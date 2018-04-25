@@ -8,7 +8,7 @@
 body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 </style>
 <script type="text/javascript" src="http://ff.kis.scr.kaspersky-labs.com/A59CADB3-00B8-0146-9BE6-6AA348729F8B/main.js" charset="UTF-8"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=yWCSnIMQgozkv02WLiN1STnc5Y6vyXTQ"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=mD8l2aEik3NTuNtIcDHqkfDxk5yz3kvj"></script>
 <title>线路地图:${modifybean.name}</title>
 </head>
 <body>
@@ -20,10 +20,15 @@ body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fami
 var map = new BMap.Map("allmap");
 map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
 map.enableScrollWheelZoom(true);
-var start = "${modifybean.startDept.address}";
-var end = "${modifybean.endDept.address}";
-
+var start =new BMap.Point(${modifybean.startDept.lng}, ${modifybean.startDept.lat});
+var end = new BMap.Point(${modifybean.endDept.lng}, ${modifybean.endDept.lat});
+var strpoints='${waypoints}';
+var startpoint=strpoints.split("-");
+var points=new Array(startpoint.length);
+ for(var i=0;i<startpoint.length;i++){
+	 points[i]=new BMap.Point(startpoint[i].split(",")[0],startpoint[i].split(",")[1]);
+ }
 var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});
-driving.search(start, end,{waypoints:[${waypoints}]});//waypoints表示途经点
+driving.search(start, end,{waypoints:points});  //waypoints表示途经点
 
 </script>

@@ -35,12 +35,12 @@
 			<value>scott</value>
 		</property>
 		<property name="password">
-			<value>123456</value>
+			<value>scott</value>
 		</property>
 		
 		
 		<property name="maxPoolSize">
-			<value>80</value>
+			<value>10</value>
 		</property>
 		<property name="minPoolSize">
 			<value>1</value>
